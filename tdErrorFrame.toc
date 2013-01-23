@@ -1,0 +1,8 @@
+## Interface: 50100
+## Title: tdErrorFrame
+## Author: ldz5
+## Version: 50100.01
+## OptionalDeps: tdCore
+## SavedVariables: TDDB_TDERRORFRAME
+
+load.xml
