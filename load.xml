@@ -1,2 +1,2 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">    <Script file="locale\zhCN.lua"/>    <Script file="main.lua"/>
+<Ui xmlns="http://www.blizzard.com/wow/ui/">    <Script file="localization\zhCN.lua"/>    <Script file="main.lua"/>
 </Ui>
