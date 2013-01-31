@@ -5,6 +5,10 @@ local errors = {}
 
 local ErrorFrame = Addon:NewModule('ErrorFrame', tdCore('GUI')('MainFrame'):New(UIParent), 'Event')
 
+seterrorhandler(function(err)
+    ErrorFrame:AddError(err, 4)
+end)
+
 function Addon:OnInit()
     self:InitDB('TDDB_TDERRORFRAME', {
         chat = true, sound = true, soundPath = [[Sound\Character\PlayerExertions\GnomeMaleFinal\GnomeMaleMainDeathA.wav]],
@@ -90,10 +94,9 @@ function ErrorFrame:OnInit()
     self:RegisterEvent('MACRO_ACTION_BLOCKED')
     self:RegisterEvent('ADDON_ACTION_FORBIDDEN')
     self:RegisterEvent('MACRO_ACTION_FORBIDDEN')
-    seterrorhandler(function(err)
-        self:AddError(err, 4)
-    end)
     self:Refresh()
+    
+    self.ready = true
 end
 
 function ErrorFrame:ADDON_ACTION_BLOCKED(addon, port)
@@ -120,14 +123,17 @@ function ErrorFrame:AddError(err, retrace)
         end
     end
     tinsert(errors, {text = err, count = 1, stack = debugstack(retrace)})
-    self:Refresh()
     
-    if Addon:GetProfile().chat then
-        print(('|cff45afd3tdErrorFrame|r: |cffcc1919%s|r'):format(err))
-    end
-    if Addon:GetProfile().sound and (GetTime() > self.soundTime) then
-		PlaySoundFile(Addon.GetProfile().soundPath);
-		self.soundTime = GetTime() + 1;
+    if self.ready then
+        self:Refresh()
+        
+        if Addon:GetProfile().chat then
+            print(('|cff45afd3tdErrorFrame|r: |cffcc1919%s|r'):format(err))
+        end
+        if Addon:GetProfile().sound and (GetTime() > self.soundTime) then
+            PlaySoundFile(Addon:GetProfile().soundPath);
+            self.soundTime = GetTime() + 1;
+        end
     end
 end
 
