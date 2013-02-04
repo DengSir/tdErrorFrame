@@ -55,9 +55,9 @@ function ErrorFrame:OnInit()
     self:HookScript('OnShow', self.Refresh)
     
     local ErrorList = tdCore('GUI')('ListWidget'):New(self)
-    ErrorList:SetPoint('TOPLEFT', 20, -50)
-    ErrorList:SetPoint('TOPRIGHT', -20, -50)
-    ErrorList:SetHeight(140)
+    ErrorList:SetPoint('TOPLEFT', 20, -40)
+    ErrorList:SetPoint('TOPRIGHT', -20, -40)
+    ErrorList:SetHeight(150)
     ErrorList:SetSelectMode('RADIO')
     ErrorList:SetLabelText(ERRORS)
     ErrorList:SetItemList(errors)
@@ -99,19 +99,19 @@ function ErrorFrame:OnInit()
     self.ready = true
 end
 
-function ErrorFrame:ADDON_ACTION_BLOCKED(addon, port)
+function ErrorFrame:ADDON_ACTION_BLOCKED(event, addon, port)
     self:AddError(format(L['%s blocked from using %s'], addon, port), 4)
 end
 
-function ErrorFrame:ADDON_ACTION_FORBIDDEN(port)
+function ErrorFrame:ADDON_ACTION_FORBIDDEN(event, port)
     self:AddError(format(L['Macro blocked from using %s'], port), 4)
 end
 
-function ErrorFrame:MACRO_ACTION_BLOCKED(addon, port)
+function ErrorFrame:MACRO_ACTION_BLOCKED(event, addon, port)
     self:AddError(format(L['%s forbidden from using %s (Only usable by Blizzard)'], addon, port), 4)
 end
 
-function ErrorFrame:MACRO_ACTION_FORBIDDEN(port)
+function ErrorFrame:MACRO_ACTION_FORBIDDEN(event, port)
     self:AddError(format(L['Macro forbidden from using %s (Only usable by Blizzard)'], port), 4)
 end
 
